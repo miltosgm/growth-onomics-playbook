@@ -6,7 +6,7 @@
     <title>Replace Manual Prospecting with an Autonomous Lead Agent in 14 Days | Growth-onomics</title>
     <meta name="description" content="Build a fully autonomous lead agent in 14 days. Includes workflows, prompts, scoring logic, and step-by-step implementation roadmap.">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Inter:wght@400;500;600;700&display=swap');
 
         * {
             margin: 0;
@@ -15,304 +15,326 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            color: #1a1a1a;
-            background: #ffffff;
+            color: #2D2D2D;
+            background: #fff;
         }
 
-        h1, h2, h3 {
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
+            font-style: italic;
         }
 
-        /* Growth-onomics Colors */
         :root {
-            --primary: #E89B2D;
-            --secondary: #1a1a1a;
-            --accent-teal: #2D7A6A;
-            --cream-bg: #FDF3E3;
-            --light-bg: #F9F7F3;
-            --white: #ffffff;
+            --primary: #E89830;
+            --navy: #1E3A5F;
+            --dark: #2D2D2D;
+            --gray: #4A4A4A;
+            --cream: #FDF4E7;
+            --light-gray: #F5F3F0;
+            --white: #fff;
         }
 
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: var(--white);
+            border-bottom: 1px solid #e5e5e5;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-url {
+            font-size: 13px;
+            color: var(--dark);
+            font-weight: 500;
+            order: 1;
+            flex: 1;
+        }
+
+        .header-logo {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--dark);
+            order: 3;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .header-logo::before {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            top: -8px;
+            right: -8px;
+        }
+
+        .header-text {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.2;
+            text-align: center;
+            order: 2;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                justify-content: flex-start;
+                padding: 16px;
+            }
+
+            .header-url {
+                flex: 1;
+            }
+        }
+
+        /* Sticky CTA */
         .sticky-cta {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--cream-bg);
-            padding: 16px 20px;
-            text-align: center;
-            z-index: 1000;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+            background: var(--cream);
             border-top: 3px solid var(--primary);
+            padding: 14px 20px;
+            text-align: center;
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
         }
 
-        .sticky-cta p {
-            color: var(--secondary);
-            font-size: 14px;
+        .sticky-cta-text {
+            font-size: 12px;
+            color: var(--dark);
             margin-bottom: 8px;
             font-weight: 600;
         }
 
-        .sticky-cta button {
+        .sticky-cta-btn {
             background: var(--primary);
-            color: var(--secondary);
+            color: var(--dark);
             border: none;
-            padding: 12px 32px;
-            border-radius: 4px;
+            padding: 10px 28px;
+            border-radius: 3px;
             font-weight: 700;
+            font-size: 13px;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
-        .sticky-cta button:hover {
-            background: #d4882a;
-            transform: translateY(-2px);
+        .sticky-cta-btn:hover {
+            background: #d4822a;
+            transform: translateY(-1px);
         }
 
-        body.has-sticky-cta {
-            padding-bottom: 90px;
+        body.has-sticky {
+            padding-bottom: 80px;
         }
 
+        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        header {
-            background: white;
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-            position: sticky;
-            top: 0;
-            z-index: 999;
-        }
-
-        header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header-left {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .logo-badge {
-            width: 48px;
-            height: 48px;
-            border: 2px solid var(--secondary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: var(--secondary);
-            font-size: 20px;
-        }
-
-        .logo-text {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--secondary);
-            line-height: 1.2;
-        }
-
-        header a {
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 13px;
-        }
-
-        section {
-            padding: 80px 20px;
-        }
-
-        section.light-bg {
-            background: var(--light-bg);
-        }
-
-        section.cream-bg {
-            background: var(--cream-bg);
-        }
-
+        /* Hero */
         .hero {
-            padding: 100px 20px 80px;
             background: var(--white);
-            border-bottom: 6px solid var(--primary);
+            border-bottom: 4px solid var(--primary);
+            padding: 60px 20px;
         }
 
         .hero .container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            gap: 50px;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
-        .hero-content h1 {
-            font-size: 52px;
+        .hero-badge {
+            display: inline-block;
+            background: var(--cream);
+            border: 2px solid var(--primary);
+            color: var(--dark);
+            padding: 10px 16px;
+            border-radius: 3px;
+            font-size: 12px;
             font-weight: 700;
-            line-height: 1.2;
             margin-bottom: 20px;
-            color: var(--secondary);
         }
 
-        .hero-content h2 {
-            font-size: 20px;
-            font-weight: 400;
+        .hero h1 {
+            font-size: 48px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .hero h2 {
+            font-size: 18px;
+            font-style: normal;
             color: var(--primary);
             margin-bottom: 30px;
-        }
-
-        .trust-badge {
-            display: inline-block;
-            background: var(--cream-bg);
-            border: 2px solid var(--primary);
-            color: var(--secondary);
-            padding: 10px 16px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 20px;
+            font-weight: 400;
         }
 
         .hero-bullets {
             list-style: none;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .hero-bullets li {
-            font-size: 16px;
-            margin-bottom: 15px;
-            padding-left: 30px;
+            font-size: 15px;
+            margin-bottom: 14px;
+            padding-left: 28px;
             position: relative;
-            color: var(--secondary);
+            color: var(--dark);
         }
 
-        .hero-bullets li:before {
-            content: "▸";
+        .hero-bullets li::before {
+            content: '▸';
             position: absolute;
             left: 0;
             color: var(--primary);
+            font-size: 18px;
             font-weight: bold;
-            font-size: 20px;
         }
 
-        .cta-button {
+        .btn {
             display: inline-block;
             background: var(--primary);
-            color: var(--secondary);
-            padding: 16px 40px;
-            border-radius: 4px;
+            color: var(--dark);
+            padding: 14px 36px;
+            border-radius: 3px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
+            font-weight: 700;
+            font-size: 14px;
             border: none;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
-        .cta-button:hover {
-            background: #d4882a;
+        .btn:hover {
+            background: #d4822a;
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(232, 155, 45, 0.2);
         }
 
         .hero-image img {
             max-width: 100%;
             height: auto;
-            border-radius: 4px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border-radius: 3px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Section */
+        section {
+            padding: 80px 20px;
+        }
+
+        section.light {
+            background: var(--light-gray);
+        }
+
+        section.cream {
+            background: var(--cream);
         }
 
         section h2 {
-            font-size: 44px;
-            color: var(--secondary);
-            margin-bottom: 40px;
+            font-size: 42px;
+            margin-bottom: 50px;
+            color: var(--dark);
+            text-align: center;
         }
 
-        .problem .container {
+        /* Problem Section */
+        .problem {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            gap: 50px;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
+        }
+
+        .problem-text h2 {
+            text-align: left;
         }
 
         .pain-point {
             display: flex;
-            margin-bottom: 20px;
-            font-size: 16px;
-            color: var(--secondary);
+            margin-bottom: 18px;
+            font-size: 15px;
+            color: var(--dark);
+            align-items: flex-start;
         }
 
-        .pain-point:before {
-            content: "×";
+        .pain-point::before {
+            content: '✕';
             color: #dc2626;
             font-weight: bold;
-            margin-right: 15px;
+            margin-right: 16px;
             flex-shrink: 0;
-            font-size: 22px;
+            font-size: 18px;
+            line-height: 1.5;
         }
 
-        .features .container {
-            text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
+        .problem-image img {
+            max-width: 100%;
+            border-radius: 3px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
+        /* Features Grid */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
         }
 
         .feature-card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--primary);
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: var(--white);
+            padding: 35px 25px;
+            border-radius: 3px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-top: 3px solid var(--primary);
         }
 
         .feature-card h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: var(--secondary);
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: var(--dark);
         }
 
         .feature-card p {
             font-size: 14px;
-            color: #666;
+            color: var(--gray);
         }
 
-        .workflow .container {
+        /* Workflow */
+        .workflow {
             text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         .workflow-subtitle {
-            font-size: 18px;
-            color: #666;
+            font-size: 16px;
+            color: var(--gray);
             margin-bottom: 40px;
             max-width: 700px;
             margin-left: auto;
@@ -321,190 +343,152 @@
 
         .workflow-image {
             margin: 40px 0;
-            position: relative;
         }
 
         .workflow-image img {
             max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border-radius: 3px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         .workflow-callout {
-            background: var(--cream-bg);
-            color: var(--secondary);
-            padding: 30px;
-            border-radius: 4px;
-            border-left: 6px solid var(--primary);
+            background: var(--cream);
+            color: var(--dark);
+            padding: 25px;
+            border-radius: 3px;
+            border-left: 4px solid var(--primary);
             margin-top: 30px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
         }
 
-        .stack .container {
-            text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .stack-categories {
+        /* Stack */
+        .stack-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px;
-        }
-
-        .stack-category {
-            background: white;
-            padding: 30px;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            text-align: left;
-        }
-
-        .stack-category h3 {
-            font-size: 16px;
-            margin-bottom: 20px;
-            color: var(--secondary);
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 12px;
-        }
-
-        .stack-category ul {
-            list-style: none;
-        }
-
-        .stack-category li {
-            padding: 8px 0;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .metrics .container {
-            text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 25px;
         }
 
-        .metric-card {
-            background: var(--cream-bg);
-            padding: 35px 25px;
-            border-radius: 4px;
-            text-align: center;
-            border-top: 4px solid var(--primary);
+        .stack-item {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 3px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .metric-card h4 {
+        .stack-item h3 {
+            font-size: 14px;
+            color: var(--navy);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            font-style: normal;
+        }
+
+        .stack-item ul {
+            list-style: none;
+        }
+
+        .stack-item li {
             font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: var(--gray);
+            padding: 6px 0;
         }
 
-        .metric-card .value {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .metric-card p {
-            font-size: 13px;
-            color: #666;
-        }
-
-        .steps .container {
-            text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .steps-timeline {
+        /* Metrics */
+        .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
-        .step-item {
-            background: white;
+        .metric {
+            background: var(--white);
             padding: 30px;
-            border-radius: 4px;
-            text-align: left;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--primary);
+            border-radius: 3px;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--navy);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .metric-desc {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        /* Steps */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .step {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 3px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-top: 3px solid var(--primary);
         }
 
         .step-number {
             display: inline-flex;
-            background: var(--cream-bg);
+            background: var(--cream);
             color: var(--primary);
-            width: 45px;
-            height: 45px;
-            border-radius: 4px;
+            width: 40px;
+            height: 40px;
             align-items: center;
             justify-content: center;
+            border-radius: 3px;
             font-weight: 700;
-            font-size: 18px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
-        .step-item h4 {
-            font-size: 16px;
-            margin-bottom: 10px;
-            color: var(--secondary);
-        }
-
-        .step-item p {
+        .step h4 {
             font-size: 14px;
-            color: #666;
+            margin-bottom: 8px;
+            color: var(--dark);
         }
 
-        .step-item img {
-            margin-top: 15px;
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
+        .step p {
+            font-size: 13px;
+            color: var(--gray);
         }
 
-        .config .container {
-            text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .config-tiers {
+        /* Config Tiers */
+        .tiers {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
         }
 
         .tier {
-            background: white;
-            padding: 40px;
-            border-radius: 4px;
-            text-align: left;
-            border: 2px solid #eee;
-            border-top: 4px solid var(--primary);
-            transition: all 0.3s;
-        }
-
-        .tier:hover {
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: var(--white);
+            padding: 35px;
+            border-radius: 3px;
+            border: 2px solid #e5e5e5;
+            border-top: 3px solid var(--primary);
         }
 
         .tier h3 {
-            font-size: 18px;
+            font-size: 15px;
             margin-bottom: 20px;
-            color: var(--secondary);
+            color: var(--dark);
         }
 
         .tier ul {
@@ -512,170 +496,153 @@
         }
 
         .tier li {
-            padding: 10px 0 10px 25px;
+            font-size: 13px;
+            color: var(--gray);
+            padding: 8px 0 8px 20px;
             position: relative;
-            font-size: 14px;
-            color: #666;
         }
 
-        .tier li:before {
-            content: "▸";
+        .tier li::before {
+            content: '▸';
             position: absolute;
             left: 0;
             color: var(--primary);
-            font-weight: bold;
         }
 
-        .quality .container {
+        /* Quality */
+        .quality {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            gap: 50px;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
-        .quality-items {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
+        .quality h2 {
+            text-align: left;
         }
 
         .quality-item {
             display: flex;
-            gap: 20px;
+            gap: 16px;
+            margin-bottom: 25px;
         }
 
         .quality-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--cream-bg);
-            color: var(--primary);
-            border-radius: 4px;
+            width: 45px;
+            height: 45px;
+            background: var(--cream);
+            border-radius: 3px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 20px;
             flex-shrink: 0;
         }
 
         .quality-item h4 {
-            font-size: 16px;
-            margin-bottom: 8px;
-            color: var(--secondary);
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: var(--dark);
         }
 
         .quality-item p {
-            font-size: 14px;
-            color: #666;
+            font-size: 13px;
+            color: var(--gray);
         }
 
         .quality-image img {
             max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border-radius: 3px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .social-proof {
-            background: white;
-            padding: 80px 20px;
-        }
-
-        .social-proof .container {
+        /* Testimonial */
+        .testimonial-section {
             text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
-        .social-proof h2 {
-            font-size: 36px;
-            margin-bottom: 50px;
-        }
-
-        .testimonial {
-            background: var(--cream-bg);
+        .testimonial-box {
+            background: var(--cream);
             padding: 40px;
-            border-radius: 4px;
+            border-radius: 3px;
             max-width: 600px;
             margin: 0 auto;
-            border-left: 6px solid var(--primary);
+            border-left: 4px solid var(--primary);
         }
 
         .testimonial-text {
-            font-size: 16px;
-            color: var(--secondary);
+            font-size: 15px;
+            color: var(--dark);
             font-style: italic;
             margin-bottom: 20px;
             line-height: 1.8;
         }
 
         .testimonial-author {
-            font-weight: 600;
-            color: var(--secondary);
-            margin-bottom: 5px;
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 14px;
+            margin-bottom: 3px;
         }
 
         .testimonial-title {
-            font-size: 13px;
+            font-size: 12px;
             color: #999;
         }
 
+        /* Final CTA */
         .final-cta {
-            background: linear-gradient(135deg, var(--secondary) 0%, #2a2a2a 100%);
-            color: white;
-            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--dark) 0%, #404040 100%);
+            color: var(--white);
         }
 
         .final-cta .container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            gap: 50px;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         .final-cta h2 {
-            color: white;
-            margin-bottom: 30px;
+            color: var(--white);
+            text-align: left;
         }
 
-        .cta-recap {
+        .cta-list {
             list-style: none;
             margin-bottom: 30px;
         }
 
-        .cta-recap li {
-            padding-left: 30px;
+        .cta-list li {
+            font-size: 15px;
+            padding-left: 28px;
             position: relative;
             margin-bottom: 12px;
-            font-size: 16px;
         }
 
-        .cta-recap li:before {
-            content: "▸";
+        .cta-list li::before {
+            content: '▸';
             position: absolute;
             left: 0;
             color: var(--primary);
-            font-weight: bold;
+            font-size: 18px;
         }
 
         .final-cta img {
             max-width: 100%;
-            height: auto;
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 2000;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
             align-items: center;
             justify-content: center;
         }
@@ -685,110 +652,105 @@
         }
 
         .modal-content {
-            background: white;
-            padding: 50px;
-            border-radius: 4px;
-            max-width: 500px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 3px;
             width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 450px;
             position: relative;
         }
 
         .modal-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 16px;
+            right: 16px;
             background: none;
             border: none;
-            font-size: 28px;
+            font-size: 24px;
             cursor: pointer;
-            color: #999;
+            color: #ccc;
         }
 
         .modal h2 {
-            font-size: 28px;
-            margin-bottom: 15px;
-            color: var(--secondary);
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: var(--dark);
         }
 
         .modal p {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 30px;
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 25px;
             line-height: 1.6;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .form-group input {
             width: 100%;
-            padding: 12px 16px;
+            padding: 11px 14px;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
+            border-radius: 3px;
+            font-size: 13px;
             font-family: inherit;
         }
 
         .form-group input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(232, 155, 45, 0.1);
+            box-shadow: 0 0 0 3px rgba(232, 152, 48, 0.1);
         }
 
-        .submit-btn {
+        .form-submit {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             background: var(--primary);
-            color: var(--secondary);
+            color: var(--dark);
             border: none;
-            border-radius: 4px;
-            font-weight: 600;
+            border-radius: 3px;
+            font-weight: 700;
+            font-size: 13px;
             cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
-        .submit-btn:hover {
-            background: #d4882a;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(232, 155, 45, 0.2);
+        .form-submit:hover {
+            background: #d4822a;
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             section {
                 padding: 50px 20px;
             }
 
             .hero {
-                padding: 60px 20px;
+                padding: 40px 20px;
             }
 
             .hero .container,
-            .problem .container,
-            .quality .container,
+            .problem,
+            .quality,
             .final-cta .container {
                 grid-template-columns: 1fr;
             }
 
-            .hero-content h1 {
-                font-size: 36px;
-            }
-
-            .hero-content h2 {
-                font-size: 16px;
-            }
-
-            section h2 {
+            .hero h1 {
                 font-size: 32px;
             }
 
+            section h2 {
+                font-size: 28px;
+                margin-bottom: 35px;
+            }
+
             .features-grid,
-            .stack-categories,
+            .stack-grid,
             .metrics-grid,
-            .steps-timeline,
-            .config-tiers {
+            .steps-grid,
+            .tiers {
                 grid-template-columns: 1fr;
             }
 
@@ -796,39 +758,38 @@
                 padding: 12px 16px;
             }
 
-            body.has-sticky-cta {
+            body.has-sticky {
                 padding-bottom: 70px;
             }
 
             .modal-content {
+                width: 85%;
                 padding: 30px;
             }
         }
     </style>
 </head>
-<body class="has-sticky-cta">
+<body class="has-sticky">
 
     <header>
-        <div class="container">
-            <div class="header-left">
-                <div class="logo-badge">g</div>
-                <div class="logo-text">
-                    GROWTH-<br>ONOMICS
-                </div>
+        <span class="header-url">www.growth-onomics.com</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <div class="header-logo">g</div>
+            <div class="header-text">
+                GROWTH<br>ONOMICS
             </div>
-            <a href="https://www.growth-onomics.com">www.growth-onomics.com</a>
         </div>
     </header>
 
     <div class="sticky-cta">
-        <p>👇 Get the complete playbook with workflows & scoring logic</p>
-        <button onclick="openModal()">Download Now</button>
+        <div class="sticky-cta-text">👇 Get the complete playbook with workflows & scoring logic</div>
+        <button class="sticky-cta-btn" onclick="openModal()">Download Now</button>
     </div>
 
     <section class="hero">
         <div class="container">
-            <div class="hero-content">
-                <div class="trust-badge">✓ Includes workflows, prompts & scoring logic</div>
+            <div>
+                <div class="hero-badge">✓ Includes workflows, prompts & scoring logic</div>
                 <h1>Replace Manual Prospecting with an Autonomous Lead Agent in 14 Days</h1>
                 <h2>Autonomous Outbound Prospecting & Contact Enrichment</h2>
                 <ul class="hero-bullets">
@@ -837,7 +798,7 @@
                     <li>Score leads against your ICP</li>
                     <li>Generate personalized outreach at scale</li>
                 </ul>
-                <button class="cta-button" onclick="openModal()">Download Now</button>
+                <button class="btn" onclick="openModal()">Download Now</button>
             </div>
             <div>
                 <img src="page1-cover.jpg" alt="Playbook Cover">
@@ -845,43 +806,43 @@
         </div>
     </section>
 
-    <section class="light-bg">
+    <section class="light">
         <div class="container">
             <div class="problem">
-                <div>
+                <div class="problem-text">
                     <h2>Why Manual Prospecting Fails</h2>
                     <div class="pain-point">SDRs waste hours researching leads</div>
                     <div class="pain-point">Data enrichment is inconsistent</div>
                     <div class="pain-point">CRM records are incomplete</div>
                     <div class="pain-point">Outreach is generic and low-response</div>
-                    <p style="margin-top: 30px; font-size: 16px; color: #666;">The solution? Stop manually prospecting. Build an autonomous agent that enriches, scores, and reaches out—every single day.</p>
+                    <p style="margin-top: 25px; font-size: 14px; color: var(--gray);">The solution? Stop manually prospecting. Build an autonomous agent that enriches, scores, and reaches out—every single day.</p>
                 </div>
-                <div>
-                    <img src="page2-metrics.jpg" alt="Problem Illustration">
+                <div class="problem-image">
+                    <img src="page2-metrics.jpg" alt="Problem">
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="cream-bg">
-        <div class="container features">
+    <section class="cream">
+        <div class="container">
             <h2>What This Agent Actually Does</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <h3>🔍 Identifies Leads</h3>
-                    <p>Pulls from your lead sources (Apollo, LinkedIn, Snov, etc.) automatically every morning.</p>
+                    <p>Pulls from your lead sources automatically every morning.</p>
                 </div>
                 <div class="feature-card">
                     <h3>📊 Enriches Missing Fields</h3>
-                    <p>Fills in company, role, industry, revenue band, and LinkedIn URL automatically.</p>
+                    <p>Fills in company, role, industry, revenue band automatically.</p>
                 </div>
                 <div class="feature-card">
                     <h3>⭐ Scores Fit Automatically</h3>
-                    <p>Rates each lead against your ideal customer profile (ICP). Strong fit? It gets priority.</p>
+                    <p>Rates leads against your ICP. Strong fits get priority.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>✉️ Generates Personalized Outreach</h3>
-                    <p>AI writes first-touch emails tailored to each lead, then pushes them straight to your CRM.</p>
+                    <h3>✉️ Generates Outreach</h3>
+                    <p>AI writes personalized emails, pushes to CRM automatically.</p>
                 </div>
             </div>
         </div>
@@ -889,48 +850,46 @@
 
     <section>
         <div class="container workflow">
-            <h2>The Daily Lead Loop That Runs With Minimal Oversight</h2>
-            <p class="workflow-subtitle">This isn't a checklist. It's a loop that ingests, enriches, scores, acts, and monitors daily.</p>
+            <h2>The Daily Lead Loop</h2>
+            <p class="workflow-subtitle">Runs with minimal human oversight—ingests, enriches, scores, acts, monitors daily.</p>
             <div class="workflow-image">
-                <img src="page3-workflow.jpg" alt="Workflow Diagram">
+                <img src="page3-workflow.jpg" alt="Workflow">
             </div>
-            <div class="workflow-callout">
-                ⚡ Runs daily with minimal human oversight
-            </div>
+            <div class="workflow-callout">⚡ Runs daily with minimal human oversight</div>
         </div>
     </section>
 
-    <section class="light-bg">
-        <div class="container stack">
+    <section class="light">
+        <div class="container">
             <h2>You Only Need a Minimal Stack to Start</h2>
-            <div class="stack-categories">
-                <div class="stack-category">
+            <div class="stack-grid">
+                <div class="stack-item">
                     <h3>👥 Lead Sources</h3>
                     <ul>
                         <li>LinkedIn Sales Navigator</li>
                         <li>Apollo / Snov exports</li>
-                        <li>Website form submissions</li>
+                        <li>Website forms</li>
                         <li>CSV from events</li>
                     </ul>
                 </div>
-                <div class="stack-category">
+                <div class="stack-item">
                     <h3>🔧 CRM</h3>
                     <ul>
                         <li>HubSpot</li>
                         <li>Pipedrive</li>
                         <li>Salesforce</li>
-                        <li>Any Zapier-compatible CRM</li>
+                        <li>Zapier-compatible</li>
                     </ul>
                 </div>
-                <div class="stack-category">
+                <div class="stack-item">
                     <h3>📈 Enrichment</h3>
                     <ul>
                         <li>Apollo enrichment</li>
                         <li>Clearbit</li>
-                        <li>CRM-native enrichment</li>
+                        <li>CRM-native tools</li>
                     </ul>
                 </div>
-                <div class="stack-category">
+                <div class="stack-item">
                     <h3>🤖 AI & Automation</h3>
                     <ul>
                         <li>ChatGPT / Claude</li>
@@ -942,155 +901,153 @@
         </div>
     </section>
 
-    <section class="cream-bg">
-        <div class="container metrics">
-            <h2>How You Know the Agent is Working</h2>
+    <section class="cream">
+        <div class="container">
+            <h2>How You Know It's Working</h2>
             <div class="metrics-grid">
-                <div class="metric-card">
-                    <h4>Leads Enriched</h4>
-                    <div class="value">100+</div>
-                    <p>per week</p>
+                <div class="metric">
+                    <div class="metric-label">Leads Enriched</div>
+                    <div class="metric-value">100+</div>
+                    <div class="metric-desc">per week</div>
                 </div>
-                <div class="metric-card">
-                    <h4>Reply Rate</h4>
-                    <div class="value">12-18%</div>
-                    <p>of outreach</p>
+                <div class="metric">
+                    <div class="metric-label">Reply Rate</div>
+                    <div class="metric-value">12-18%</div>
+                    <div class="metric-desc">of outreach</div>
                 </div>
-                <div class="metric-card">
-                    <h4>Meetings Booked</h4>
-                    <div class="value">5-8%</div>
-                    <p>of leads</p>
+                <div class="metric">
+                    <div class="metric-label">Meetings Booked</div>
+                    <div class="metric-value">5-8%</div>
+                    <div class="metric-desc">of leads</div>
                 </div>
-                <div class="metric-card">
-                    <h4>Hours Saved</h4>
-                    <div class="value">20+</div>
-                    <p>per week</p>
+                <div class="metric">
+                    <div class="metric-label">Hours Saved</div>
+                    <div class="metric-value">20+</div>
+                    <div class="metric-desc">per week</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="light-bg">
-        <div class="container steps">
+    <section class="light">
+        <div class="container">
             <h2>The 6-Step Implementation Roadmap</h2>
-            <div class="steps-timeline">
-                <div class="step-item">
+            <div class="steps-grid">
+                <div class="step">
                     <div class="step-number">1</div>
                     <h4>Feed Lead Sources</h4>
-                    <p>Connect Apollo, LinkedIn, or CSV exports to Google Sheets. Set up your "Raw Leads" input.</p>
+                    <p>Connect Apollo, LinkedIn, or CSV exports to Google Sheets.</p>
                 </div>
-                <div class="step-item">
+                <div class="step">
                     <div class="step-number">2</div>
                     <h4>Enrich Automatically</h4>
-                    <p>Add Zapier workflows to clean data and call enrichment APIs (Apollo, Clearbit).</p>
+                    <p>Add Zapier workflows and call enrichment APIs.</p>
                 </div>
-                <div class="step-item">
+                <div class="step">
                     <div class="step-number">3</div>
                     <h4>Score Against ICP</h4>
-                    <p>Build scoring logic: industry match, company size, role, geography. High scorers get top priority.</p>
+                    <p>Build scoring logic: industry, company size, role, geography.</p>
                 </div>
-                <div class="step-item">
+                <div class="step">
                     <div class="step-number">4</div>
                     <h4>Generate Outreach</h4>
-                    <p>Use ChatGPT/Claude to write personalized first-touch emails. Store drafts as CRM notes.</p>
+                    <p>Use ChatGPT/Claude for personalized first-touch emails.</p>
                 </div>
-                <div class="step-item">
+                <div class="step">
                     <div class="step-number">5</div>
                     <h4>Push to CRM</h4>
-                    <p>Create or update contacts in HubSpot/Pipedrive. Attach ICP score and email draft.</p>
+                    <p>Create/update contacts in HubSpot or Pipedrive.</p>
                 </div>
-                <div class="step-item">
+                <div class="step">
                     <div class="step-number">6</div>
                     <h4>Daily Summaries</h4>
-                    <p>Pull yesterday's results. Send team a summary: leads processed, strong-fit count, top 3 names.</p>
+                    <p>Send team summary: leads processed, top candidates.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="cream-bg">
-        <div class="container config">
+    <section class="cream">
+        <div class="container">
             <h2>Start Scrappy, Scale to Production</h2>
-            <div class="config-tiers">
+            <div class="tiers">
                 <div class="tier">
-                    <h3>🟢 Good Configuration</h3>
+                    <h3>🟢 Good</h3>
                     <ul>
-                        <li>Google Sheets for data</li>
-                        <li>Zapier (basic plan)</li>
-                        <li>Apollo or Snov exports</li>
-                        <li>ChatGPT for message generation</li>
+                        <li>Google Sheets</li>
+                        <li>Zapier (basic)</li>
+                        <li>Apollo exports</li>
+                        <li>ChatGPT</li>
                     </ul>
                 </div>
                 <div class="tier">
-                    <h3>🔵 Better Configuration</h3>
+                    <h3>🔵 Better</h3>
                     <ul>
-                        <li>Make with enrichment APIs</li>
-                        <li>OpenAI Workflows for combined scoring + messaging</li>
-                        <li>Direct CRM integration</li>
-                        <li>Advanced data mapping</li>
+                        <li>Make.com</li>
+                        <li>OpenAI Workflows</li>
+                        <li>CRM integration</li>
+                        <li>Advanced mapping</li>
                     </ul>
                 </div>
                 <div class="tier">
-                    <h3>⚫ Best Configuration</h3>
+                    <h3>⚫ Best</h3>
                     <ul>
-                        <li>Custom retool interface</li>
-                        <li>OpenAI Workflows as central logic</li>
-                        <li>Direct connections to enrichment, CRM, outreach tools</li>
-                        <li>Real-time monitoring dashboard</li>
+                        <li>Retool interface</li>
+                        <li>OpenAI orchestration</li>
+                        <li>Direct connections</li>
+                        <li>Monitoring dashboard</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="light-bg">
+    <section class="light">
         <div class="container">
             <div class="quality">
                 <div>
                     <h2>Quality Control & Iteration</h2>
-                    <div class="quality-items">
-                        <div class="quality-item">
-                            <div class="quality-icon">📋</div>
-                            <div>
-                                <h4>Weekly Review</h4>
-                                <p>Review at least 10 agent-generated messages per week. Compare to your best-performing messages.</p>
-                            </div>
+                    <div class="quality-item">
+                        <div class="quality-icon">📋</div>
+                        <div>
+                            <h4>Weekly Review</h4>
+                            <p>Review 10+ agent messages, compare to best performers.</p>
                         </div>
-                        <div class="quality-item">
-                            <div class="quality-icon">⚙️</div>
-                            <div>
-                                <h4>Data-Driven Adjustments</h4>
-                                <p>Adjust prompts, scoring rules, and ICP descriptions based on actual replies and meetings.</p>
-                            </div>
+                    </div>
+                    <div class="quality-item">
+                        <div class="quality-icon">⚙️</div>
+                        <div>
+                            <h4>Data-Driven Adjustments</h4>
+                            <p>Refine prompts and scoring based on results.</p>
                         </div>
-                        <div class="quality-item">
-                            <div class="quality-icon">✅</div>
-                            <div>
-                                <h4>Approval for New Markets</h4>
-                                <p>Introduce a simple approval step for new segments or markets until you're confident in quality.</p>
-                            </div>
+                    </div>
+                    <div class="quality-item">
+                        <div class="quality-icon">✅</div>
+                        <div>
+                            <h4>New Market Approval</h4>
+                            <p>Add approval step for new segments.</p>
                         </div>
-                        <div class="quality-item">
-                            <div class="quality-icon">💬</div>
-                            <div>
-                                <h4>Sales Feedback Loop</h4>
-                                <p>Use feedback from sales to improve the outreach angle and qualification rules.</p>
-                            </div>
+                    </div>
+                    <div class="quality-item">
+                        <div class="quality-icon">💬</div>
+                        <div>
+                            <h4>Sales Feedback Loop</h4>
+                            <p>Improve based on real sales outcomes.</p>
                         </div>
                     </div>
                 </div>
                 <div class="quality-image">
-                    <img src="page9-quality.jpg" alt="Quality Control">
+                    <img src="page9-quality.jpg" alt="Quality">
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="social-proof">
+    <section class="testimonial-section" style="padding: 80px 20px; background: var(--white);">
         <div class="container">
             <h2>What Growth Teams Are Saying</h2>
-            <div class="testimonial">
-                <div class="testimonial-text">"This playbook saved us 20+ hours per week on manual prospecting. Our response rates went up 40% after implementing the scoring logic and personalized outreach."</div>
+            <div class="testimonial-box">
+                <div class="testimonial-text">"This playbook saved us 20+ hours per week. Our response rates went up 40% after implementing the scoring logic."</div>
                 <div class="testimonial-author">Alex Chen</div>
                 <div class="testimonial-title">VP Growth, SaaS Company</div>
             </div>
@@ -1100,18 +1057,18 @@
     <section class="final-cta">
         <div class="container">
             <div>
-                <h2>Download the Complete Lead Gen Agent Playbook</h2>
-                <ul class="cta-recap">
+                <h2>Download the Complete Playbook</h2>
+                <ul class="cta-list">
                     <li><strong>Complete workflow loop</strong> (6-step roadmap)</li>
                     <li><strong>ICP scoring model</strong> with real examples</li>
-                    <li><strong>Prompt templates</strong> for outreach generation</li>
-                    <li><strong>CRM integration</strong> step-by-step</li>
-                    <li><strong>Quality control</strong> checklist & metrics</li>
+                    <li><strong>Prompt templates</strong> for outreach</li>
+                    <li><strong>CRM integration</strong> steps</li>
+                    <li><strong>Quality control</strong> checklist</li>
                 </ul>
-                <button class="cta-button" onclick="openModal()">Get the Playbook</button>
+                <button class="btn" onclick="openModal()">Get the Playbook</button>
             </div>
             <div>
-                <img src="page1-cover.jpg" alt="Playbook Cover">
+                <img src="page1-cover.jpg" alt="Playbook">
             </div>
         </div>
     </section>
@@ -1120,7 +1077,7 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">×</button>
             <h2>Download the Playbook</h2>
-            <p>Get the complete step-by-step guide to building your autonomous lead agent in 14 days. Includes workflows, templates, and scoring logic.</p>
+            <p>Get the complete guide to building your autonomous lead agent in 14 days. Includes workflows, templates, and scoring logic.</p>
             <form onsubmit="handleSubmit(event)">
                 <div class="form-group">
                     <input type="text" id="name" placeholder="Your Full Name" required>
@@ -1128,18 +1085,19 @@
                 <div class="form-group">
                     <input type="email" id="email" placeholder="Work Email Address" required>
                 </div>
-                <button type="submit" class="submit-btn">Send Me the Playbook</button>
+                <button type="submit" class="form-submit">Send Me the Playbook</button>
             </form>
         </div>
     </div>
 
     <script>
         function openModal() {
-            const modalContent = document.querySelector('.modal-content');
-            modalContent.innerHTML = `
+            const modal = document.getElementById('leadModal');
+            const content = modal.querySelector('.modal-content');
+            content.innerHTML = `
                 <button class="modal-close" onclick="closeModal()">×</button>
                 <h2>Download the Playbook</h2>
-                <p>Get the complete step-by-step guide to building your autonomous lead agent in 14 days. Includes workflows, templates, and scoring logic.</p>
+                <p>Get the complete guide to building your autonomous lead agent in 14 days.</p>
                 <form onsubmit="handleSubmit(event)">
                     <div class="form-group">
                         <input type="text" id="name" placeholder="Your Full Name" required>
@@ -1147,10 +1105,10 @@
                     <div class="form-group">
                         <input type="email" id="email" placeholder="Work Email Address" required>
                     </div>
-                    <button type="submit" class="submit-btn">Send Me the Playbook</button>
+                    <button type="submit" class="form-submit">Send Me the Playbook</button>
                 </form>
             `;
-            document.getElementById('leadModal').classList.add('active');
+            modal.classList.add('active');
         }
 
         function closeModal() {
@@ -1159,40 +1117,23 @@
 
         function handleSubmit(event) {
             event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
             
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Please enter a valid email address');
-                return;
-            }
-            
-            console.log('Lead captured:', { name, email });
-            
-            const modalContent = document.querySelector('.modal-content');
-            modalContent.innerHTML = `
-                <div style="text-align: center; padding: 40px 20px;">
-                    <h2 style="color: #E89B2D; margin-bottom: 15px;">✅ Check Your Email!</h2>
-                    <p>We've sent the complete <strong>Autonomous Lead Agent Playbook</strong> to:</p>
-                    <p style="background: #FDF3E3; padding: 12px; border-radius: 4px; font-weight: 500; color: #1a1a1a; margin: 15px 0;">
-                        ${email}
-                    </p>
-                    <p style="margin-top: 20px; color: #999; font-size: 14px;">
-                        It includes workflows, prompts, scoring logic, and the complete 6-step implementation roadmap.
-                    </p>
-                    <button class="cta-button" onclick="closeModal()" style="margin-top: 20px; background: #1a1a1a; color: white; border: none; cursor: pointer;">
-                        Close
-                    </button>
+            const modal = document.getElementById('leadModal');
+            const content = modal.querySelector('.modal-content');
+            content.innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <h2 style="color: var(--primary); margin-bottom: 15px;">✅ Check Your Email!</h2>
+                    <p style="font-size: 14px; color: var(--gray); margin-bottom: 15px;">We sent the playbook to:</p>
+                    <p style="background: var(--light-gray); padding: 12px; border-radius: 3px; font-weight: 600; color: var(--dark); margin-bottom: 20px; font-size: 13px;">${email}</p>
+                    <button class="btn" onclick="closeModal()">Close</button>
                 </div>
             `;
         }
 
-        document.getElementById('leadModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+        document.getElementById('leadModal').addEventListener('click', (e) => {
+            if (e.target.id === 'leadModal') closeModal();
         });
     </script>
 </body>
