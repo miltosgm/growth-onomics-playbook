@@ -14,11 +14,18 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
-            color: #2D2D2D;
-            background: #fff;
+            color: #1A1A1A;
+            background: #FFFFFF;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -28,13 +35,13 @@
         }
 
         :root {
-            --primary: #E89830;
+            --primary: #E8A838;
             --navy: #1E3A5F;
-            --dark: #2D2D2D;
-            --gray: #4A4A4A;
-            --cream: #FDF4E7;
-            --light-gray: #F5F3F0;
-            --white: #fff;
+            --dark: #1A1A1A;
+            --gray: #666666;
+            --cream: #FDF3E3;
+            --light-gray: #F5F5F5;
+            --border: #D1D1D1;
         }
 
         /* Header */
@@ -42,69 +49,43 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
-            background: var(--white);
-            border-bottom: 1px solid #e5e5e5;
+            padding: 40px 60px;
+            background: #FFFFFF;
+            border-bottom: 1px solid #E5E5E5;
             position: sticky;
             top: 0;
             z-index: 99;
-            flex-wrap: wrap;
-            gap: 20px;
         }
 
         .header-url {
-            font-size: 13px;
-            color: var(--dark);
-            font-weight: 500;
-            order: 1;
-            flex: 1;
+            font-size: 14px;
+            color: #333333;
+            font-weight: 400;
         }
 
         .header-logo {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border: 2px solid var(--dark);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 20px;
+            font-size: 24px;
             color: var(--dark);
-            order: 3;
-            flex-shrink: 0;
             position: relative;
         }
 
         .header-logo::before {
             content: '';
             position: absolute;
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             background: var(--primary);
             border-radius: 50%;
-            top: -8px;
-            right: -8px;
-        }
-
-        .header-text {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--dark);
-            line-height: 1.2;
-            text-align: center;
-            order: 2;
-        }
-
-        @media (max-width: 600px) {
-            header {
-                justify-content: flex-start;
-                padding: 16px;
-            }
-
-            .header-url {
-                flex: 1;
-            }
+            top: -12px;
+            right: -12px;
         }
 
         /* Sticky CTA */
@@ -114,26 +95,26 @@
             left: 0;
             right: 0;
             background: var(--cream);
-            border-top: 3px solid var(--primary);
-            padding: 14px 20px;
+            border-top: 1px solid var(--border);
+            padding: 16px 20px;
             text-align: center;
             z-index: 100;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
         }
 
         .sticky-cta-text {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--dark);
             margin-bottom: 8px;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .sticky-cta-btn {
             background: var(--primary);
             color: var(--dark);
             border: none;
-            padding: 10px 28px;
-            border-radius: 3px;
+            padding: 11px 30px;
+            border-radius: 0;
             font-weight: 700;
             font-size: 13px;
             cursor: pointer;
@@ -141,33 +122,36 @@
         }
 
         .sticky-cta-btn:hover {
-            background: #d4822a;
+            background: #D4912F;
             transform: translateY(-1px);
         }
 
         body.has-sticky {
-            padding-bottom: 80px;
+            padding-bottom: 85px;
         }
 
         /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 60px;
         }
 
         /* Hero */
         .hero {
-            background: var(--white);
-            border-bottom: 4px solid var(--primary);
-            padding: 60px 20px;
+            background: #FFFFFF;
+            padding: 80px 60px;
+            border-bottom: 1px solid #E5E5E5;
         }
 
         .hero .container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            gap: 60px;
             align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0;
         }
 
         .hero-badge {
@@ -176,38 +160,40 @@
             border: 2px solid var(--primary);
             color: var(--dark);
             padding: 10px 16px;
-            border-radius: 3px;
-            font-size: 12px;
+            border-radius: 0;
+            font-size: 11px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            letter-spacing: 0.3px;
         }
 
         .hero h1 {
-            font-size: 48px;
-            line-height: 1.1;
+            font-size: 64px;
+            line-height: 1.15;
             margin-bottom: 20px;
             color: var(--dark);
         }
 
         .hero h2 {
-            font-size: 18px;
+            font-size: 20px;
             font-style: normal;
-            color: var(--primary);
-            margin-bottom: 30px;
             font-weight: 400;
+            color: var(--primary);
+            margin-bottom: 32px;
         }
 
         .hero-bullets {
             list-style: none;
-            margin-bottom: 30px;
+            margin-bottom: 36px;
         }
 
         .hero-bullets li {
-            font-size: 15px;
-            margin-bottom: 14px;
+            font-size: 16px;
+            margin-bottom: 16px;
             padding-left: 28px;
             position: relative;
             color: var(--dark);
+            line-height: 1.5;
         }
 
         .hero-bullets li::before {
@@ -215,7 +201,7 @@
             position: absolute;
             left: 0;
             color: var(--primary);
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
         }
 
@@ -224,7 +210,7 @@
             background: var(--primary);
             color: var(--dark);
             padding: 14px 36px;
-            border-radius: 3px;
+            border-radius: 0;
             text-decoration: none;
             font-weight: 700;
             font-size: 14px;
@@ -234,20 +220,21 @@
         }
 
         .btn:hover {
-            background: #d4822a;
+            background: #D4912F;
             transform: translateY(-2px);
         }
 
         .hero-image img {
             max-width: 100%;
             height: auto;
-            border-radius: 3px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 0;
+            box-shadow: none;
         }
 
         /* Section */
         section {
-            padding: 80px 20px;
+            padding: 80px 60px;
+            background: #FFFFFF;
         }
 
         section.light {
@@ -258,73 +245,92 @@
             background: var(--cream);
         }
 
+        section .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
         section h2 {
-            font-size: 42px;
-            margin-bottom: 50px;
+            font-size: 52px;
+            margin-bottom: 60px;
             color: var(--dark);
-            text-align: center;
+            line-height: 1.2;
         }
 
         /* Problem Section */
         .problem {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
+            gap: 80px;
+            align-items: start;
         }
 
-        .problem-text h2 {
-            text-align: left;
+        .problem h2 {
+            margin-bottom: 40px;
         }
 
         .pain-point {
             display: flex;
-            margin-bottom: 18px;
-            font-size: 15px;
+            margin-bottom: 24px;
+            font-size: 16px;
             color: var(--dark);
             align-items: flex-start;
+            line-height: 1.5;
         }
 
         .pain-point::before {
             content: '✕';
-            color: #dc2626;
+            color: #DC2626;
             font-weight: bold;
             margin-right: 16px;
             flex-shrink: 0;
-            font-size: 18px;
+            font-size: 20px;
             line-height: 1.5;
+        }
+
+        .problem-text p {
+            margin-top: 32px;
+            font-size: 16px;
+            color: var(--gray);
+            line-height: 1.6;
         }
 
         .problem-image img {
             max-width: 100%;
-            border-radius: 3px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 0;
         }
 
         /* Features Grid */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
+            gap: 40px;
         }
 
         .feature-card {
-            background: var(--white);
-            padding: 35px 25px;
-            border-radius: 3px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border-top: 3px solid var(--primary);
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 0;
+            box-shadow: none;
+            border-left: 4px solid var(--primary);
+        }
+
+        section.light .feature-card {
+            background: #FFFFFF;
         }
 
         .feature-card h3 {
-            font-size: 16px;
-            margin-bottom: 12px;
+            font-size: 18px;
+            margin-bottom: 16px;
             color: var(--dark);
+            font-style: normal;
         }
 
         .feature-card p {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--gray);
+            line-height: 1.6;
         }
 
         /* Workflow */
@@ -332,55 +338,65 @@
             text-align: center;
         }
 
+        .workflow h2 {
+            margin-bottom: 24px;
+        }
+
         .workflow-subtitle {
             font-size: 16px;
             color: var(--gray);
-            margin-bottom: 40px;
+            margin-bottom: 48px;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.6;
         }
 
         .workflow-image {
-            margin: 40px 0;
+            margin: 48px 0;
         }
 
         .workflow-image img {
             max-width: 100%;
-            border-radius: 3px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 0;
+            box-shadow: none;
         }
 
         .workflow-callout {
             background: var(--cream);
             color: var(--dark);
-            padding: 25px;
-            border-radius: 3px;
+            padding: 28px;
+            border-radius: 0;
             border-left: 4px solid var(--primary);
-            margin-top: 30px;
-            font-size: 15px;
+            margin-top: 40px;
+            font-size: 16px;
             font-weight: 600;
+            text-align: center;
         }
 
         /* Stack */
         .stack-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
+            gap: 40px;
         }
 
         .stack-item {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 3px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        section.light .stack-item {
+            background: #FFFFFF;
         }
 
         .stack-item h3 {
-            font-size: 14px;
+            font-size: 18px;
             color: var(--navy);
-            margin-bottom: 16px;
-            padding-bottom: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
             border-bottom: 2px solid var(--primary);
             font-style: normal;
         }
@@ -390,44 +406,50 @@
         }
 
         .stack-item li {
-            font-size: 13px;
+            font-size: 15px;
             color: var(--gray);
-            padding: 6px 0;
+            padding: 8px 0;
+            line-height: 1.5;
         }
 
         /* Metrics */
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 40px;
         }
 
         .metric {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 3px;
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 0;
             text-align: center;
-            border-top: 3px solid var(--primary);
+            border-top: 4px solid var(--primary);
+            box-shadow: none;
+        }
+
+        section.cream .metric {
+            background: #FFFFFF;
         }
 
         .metric-label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             color: var(--navy);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
         }
 
         .metric-value {
-            font-size: 32px;
+            font-size: 48px;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .metric-desc {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--gray);
         }
 
@@ -435,60 +457,74 @@
         .steps-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 40px;
         }
 
         .step {
-            background: var(--white);
-            padding: 25px;
-            border-radius: 3px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border-top: 3px solid var(--primary);
+            background: #FFFFFF;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+            border-left: 4px solid var(--primary);
+            padding-left: 20px;
+        }
+
+        section.light .step {
+            background: transparent;
         }
 
         .step-number {
-            display: inline-flex;
-            background: var(--cream);
+            display: inline-block;
             color: var(--primary);
-            width: 40px;
-            height: 40px;
-            align-items: center;
-            justify-content: center;
-            border-radius: 3px;
             font-weight: 700;
+            font-size: 24px;
             margin-bottom: 12px;
         }
 
         .step h4 {
-            font-size: 14px;
-            margin-bottom: 8px;
+            font-size: 16px;
+            margin-bottom: 12px;
             color: var(--dark);
+            font-style: normal;
         }
 
         .step p {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .step img {
+            margin-top: 16px;
+            max-width: 100%;
+            border-radius: 0;
         }
 
         /* Config Tiers */
         .tiers {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
+            gap: 40px;
         }
 
         .tier {
-            background: var(--white);
-            padding: 35px;
-            border-radius: 3px;
-            border: 2px solid #e5e5e5;
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 0;
+            border: 1px solid var(--border);
             border-top: 3px solid var(--primary);
         }
 
+        section.cream .tier {
+            background: #FFFFFF;
+        }
+
         .tier h3 {
-            font-size: 15px;
-            margin-bottom: 20px;
+            font-size: 16px;
+            margin-bottom: 24px;
             color: var(--dark);
+            font-style: normal;
         }
 
         .tier ul {
@@ -496,10 +532,11 @@
         }
 
         .tier li {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--gray);
             padding: 8px 0 8px 20px;
             position: relative;
+            line-height: 1.5;
         }
 
         .tier li::before {
@@ -513,47 +550,49 @@
         .quality {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
+            gap: 80px;
+            align-items: start;
         }
 
-        .quality h2 {
-            text-align: left;
+        .quality-items {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
         }
 
         .quality-item {
             display: flex;
-            gap: 16px;
-            margin-bottom: 25px;
+            gap: 20px;
         }
 
         .quality-icon {
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             background: var(--cream);
-            border-radius: 3px;
+            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 24px;
             flex-shrink: 0;
         }
 
         .quality-item h4 {
-            font-size: 14px;
-            margin-bottom: 6px;
+            font-size: 15px;
+            margin-bottom: 8px;
             color: var(--dark);
+            font-style: normal;
         }
 
         .quality-item p {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--gray);
+            line-height: 1.6;
         }
 
         .quality-image img {
             max-width: 100%;
-            border-radius: 3px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 0;
         }
 
         /* Testimonial */
@@ -563,18 +602,18 @@
 
         .testimonial-box {
             background: var(--cream);
-            padding: 40px;
-            border-radius: 3px;
-            max-width: 600px;
+            padding: 48px;
+            border-radius: 0;
+            max-width: 700px;
             margin: 0 auto;
             border-left: 4px solid var(--primary);
         }
 
         .testimonial-text {
-            font-size: 15px;
+            font-size: 16px;
             color: var(--dark);
             font-style: italic;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             line-height: 1.8;
         }
 
@@ -582,42 +621,45 @@
             font-weight: 700;
             color: var(--dark);
             font-size: 14px;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .testimonial-title {
-            font-size: 12px;
+            font-size: 13px;
             color: #999;
         }
 
         /* Final CTA */
         .final-cta {
-            background: linear-gradient(135deg, var(--dark) 0%, #404040 100%);
-            color: var(--white);
+            background: var(--dark);
+            color: #FFFFFF;
         }
 
         .final-cta .container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            gap: 80px;
             align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0;
         }
 
         .final-cta h2 {
-            color: var(--white);
-            text-align: left;
+            color: #FFFFFF;
         }
 
         .cta-list {
             list-style: none;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
         .cta-list li {
-            font-size: 15px;
+            font-size: 16px;
             padding-left: 28px;
             position: relative;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            line-height: 1.5;
         }
 
         .cta-list li::before {
@@ -625,12 +667,17 @@
             position: absolute;
             left: 0;
             color: var(--primary);
-            font-size: 18px;
+            font-size: 20px;
+        }
+
+        .final-cta .btn {
+            color: #FFFFFF;
+            background: var(--primary);
         }
 
         .final-cta img {
             max-width: 100%;
-            border-radius: 3px;
+            border-radius: 0;
         }
 
         /* Modal */
@@ -641,7 +688,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -652,82 +699,115 @@
         }
 
         .modal-content {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 3px;
+            background: #FFFFFF;
+            padding: 48px;
+            border-radius: 0;
             width: 90%;
-            max-width: 450px;
+            max-width: 480px;
             position: relative;
         }
 
         .modal-close {
             position: absolute;
-            top: 16px;
-            right: 16px;
+            top: 20px;
+            right: 20px;
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 28px;
             cursor: pointer;
             color: #ccc;
         }
 
         .modal h2 {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 12px;
             color: var(--dark);
         }
 
         .modal p {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--gray);
-            margin-bottom: 25px;
+            margin-bottom: 28px;
             line-height: 1.6;
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .form-group input {
             width: 100%;
-            padding: 11px 14px;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            font-size: 13px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 0;
+            font-size: 14px;
             font-family: inherit;
         }
 
         .form-group input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(232, 152, 48, 0.1);
+            box-shadow: 0 0 0 3px rgba(232, 168, 56, 0.1);
         }
 
         .form-submit {
             width: 100%;
-            padding: 12px;
+            padding: 13px;
             background: var(--primary);
             color: var(--dark);
             border: none;
-            border-radius: 3px;
+            border-radius: 0;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .form-submit:hover {
-            background: #d4822a;
+            background: #D4912F;
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            section {
-                padding: 50px 20px;
+        @media (max-width: 1024px) {
+            .container, section .container, .hero .container, .final-cta .container {
+                padding: 0 40px;
             }
 
-            .hero {
+            header {
+                padding: 30px 40px;
+            }
+
+            section {
+                padding: 60px 40px;
+            }
+
+            section h2 {
+                font-size: 40px;
+                margin-bottom: 40px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .tiers {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 24px 20px;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            section, .hero {
                 padding: 40px 20px;
+            }
+
+            .container, section .container, .hero .container, .final-cta .container {
+                padding: 0;
             }
 
             .hero .container,
@@ -735,15 +815,16 @@
             .quality,
             .final-cta .container {
                 grid-template-columns: 1fr;
+                gap: 40px;
             }
 
             .hero h1 {
-                font-size: 32px;
+                font-size: 36px;
             }
 
             section h2 {
-                font-size: 28px;
-                margin-bottom: 35px;
+                font-size: 32px;
+                margin-bottom: 30px;
             }
 
             .features-grid,
@@ -752,6 +833,7 @@
             .steps-grid,
             .tiers {
                 grid-template-columns: 1fr;
+                gap: 30px;
             }
 
             .sticky-cta {
@@ -773,12 +855,7 @@
 
     <header>
         <span class="header-url">www.growth-onomics.com</span>
-        <div style="display: flex; align-items: center; gap: 8px;">
-            <div class="header-logo">g</div>
-            <div class="header-text">
-                GROWTH<br>ONOMICS
-            </div>
-        </div>
+        <div class="header-logo">g</div>
     </header>
 
     <div class="sticky-cta">
@@ -815,7 +892,7 @@
                     <div class="pain-point">Data enrichment is inconsistent</div>
                     <div class="pain-point">CRM records are incomplete</div>
                     <div class="pain-point">Outreach is generic and low-response</div>
-                    <p style="margin-top: 25px; font-size: 14px; color: var(--gray);">The solution? Stop manually prospecting. Build an autonomous agent that enriches, scores, and reaches out—every single day.</p>
+                    <p>The solution? Stop manually prospecting. Build an autonomous agent that enriches, scores, and reaches out—every single day.</p>
                 </div>
                 <div class="problem-image">
                     <img src="page2-metrics.jpg" alt="Problem">
@@ -824,25 +901,25 @@
         </div>
     </section>
 
-    <section class="cream">
+    <section class="light">
         <div class="container">
             <h2>What This Agent Actually Does</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <h3>🔍 Identifies Leads</h3>
-                    <p>Pulls from your lead sources automatically every morning.</p>
+                    <p>Pulls from your lead sources (Apollo, LinkedIn, Snov, etc.) automatically every morning.</p>
                 </div>
                 <div class="feature-card">
                     <h3>📊 Enriches Missing Fields</h3>
-                    <p>Fills in company, role, industry, revenue band automatically.</p>
+                    <p>Fills in company, role, industry, revenue band, and LinkedIn URL automatically.</p>
                 </div>
                 <div class="feature-card">
                     <h3>⭐ Scores Fit Automatically</h3>
-                    <p>Rates leads against your ICP. Strong fits get priority.</p>
+                    <p>Rates each lead against your ideal customer profile (ICP). Strong fit? It gets priority.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>✉️ Generates Outreach</h3>
-                    <p>AI writes personalized emails, pushes to CRM automatically.</p>
+                    <h3>✉️ Generates Personalized Outreach</h3>
+                    <p>AI writes first-touch emails tailored to each lead, then pushes them straight to your CRM.</p>
                 </div>
             </div>
         </div>
@@ -850,8 +927,8 @@
 
     <section>
         <div class="container workflow">
-            <h2>The Daily Lead Loop</h2>
-            <p class="workflow-subtitle">Runs with minimal human oversight—ingests, enriches, scores, acts, monitors daily.</p>
+            <h2>The Daily Lead Loop That Runs With Minimal Oversight</h2>
+            <p class="workflow-subtitle">This isn't a checklist. It's a loop that ingests, enriches, scores, acts, and monitors daily.</p>
             <div class="workflow-image">
                 <img src="page3-workflow.jpg" alt="Workflow">
             </div>
@@ -868,8 +945,8 @@
                     <ul>
                         <li>LinkedIn Sales Navigator</li>
                         <li>Apollo / Snov exports</li>
-                        <li>Website forms</li>
-                        <li>CSV from events</li>
+                        <li>Website form submissions</li>
+                        <li>CSV lists from events</li>
                     </ul>
                 </div>
                 <div class="stack-item">
@@ -878,7 +955,7 @@
                         <li>HubSpot</li>
                         <li>Pipedrive</li>
                         <li>Salesforce</li>
-                        <li>Zapier-compatible</li>
+                        <li>Any Zapier-compatible CRM</li>
                     </ul>
                 </div>
                 <div class="stack-item">
@@ -886,15 +963,15 @@
                     <ul>
                         <li>Apollo enrichment</li>
                         <li>Clearbit</li>
-                        <li>CRM-native tools</li>
+                        <li>CRM-native enrichment</li>
                     </ul>
                 </div>
                 <div class="stack-item">
                     <h3>🤖 AI & Automation</h3>
                     <ul>
-                        <li>ChatGPT / Claude</li>
+                        <li>ChatGPT or Claude</li>
                         <li>OpenAI Workflows</li>
-                        <li>Zapier / Make</li>
+                        <li>Zapier or Make</li>
                     </ul>
                 </div>
             </div>
@@ -903,7 +980,7 @@
 
     <section class="cream">
         <div class="container">
-            <h2>How You Know It's Working</h2>
+            <h2>How You Know the Agent is Working</h2>
             <div class="metrics-grid">
                 <div class="metric">
                     <div class="metric-label">Leads Enriched</div>
@@ -934,34 +1011,34 @@
             <h2>The 6-Step Implementation Roadmap</h2>
             <div class="steps-grid">
                 <div class="step">
-                    <div class="step-number">1</div>
+                    <div class="step-number">01.</div>
                     <h4>Feed Lead Sources</h4>
-                    <p>Connect Apollo, LinkedIn, or CSV exports to Google Sheets.</p>
+                    <p>Connect Apollo, LinkedIn, or CSV exports to Google Sheets. Set up your "Raw Leads" input.</p>
                 </div>
                 <div class="step">
-                    <div class="step-number">2</div>
+                    <div class="step-number">02.</div>
                     <h4>Enrich Automatically</h4>
-                    <p>Add Zapier workflows and call enrichment APIs.</p>
+                    <p>Add Zapier workflows to clean data and call enrichment APIs (Apollo, Clearbit).</p>
                 </div>
                 <div class="step">
-                    <div class="step-number">3</div>
+                    <div class="step-number">03.</div>
                     <h4>Score Against ICP</h4>
-                    <p>Build scoring logic: industry, company size, role, geography.</p>
+                    <p>Build scoring logic: industry match, company size, role, geography. High scorers get priority.</p>
                 </div>
                 <div class="step">
-                    <div class="step-number">4</div>
+                    <div class="step-number">04.</div>
                     <h4>Generate Outreach</h4>
-                    <p>Use ChatGPT/Claude for personalized first-touch emails.</p>
+                    <p>Use ChatGPT/Claude to write personalized first-touch emails. Store drafts as CRM notes.</p>
                 </div>
                 <div class="step">
-                    <div class="step-number">5</div>
+                    <div class="step-number">05.</div>
                     <h4>Push to CRM</h4>
-                    <p>Create/update contacts in HubSpot or Pipedrive.</p>
+                    <p>Create or update contacts in HubSpot/Pipedrive. Attach ICP score and email draft as a note.</p>
                 </div>
                 <div class="step">
-                    <div class="step-number">6</div>
+                    <div class="step-number">06.</div>
                     <h4>Daily Summaries</h4>
-                    <p>Send team summary: leads processed, top candidates.</p>
+                    <p>Pull yesterday's results. Send team a summary: leads processed, strong-fit count, top 3 names.</p>
                 </div>
             </div>
         </div>
@@ -972,30 +1049,30 @@
             <h2>Start Scrappy, Scale to Production</h2>
             <div class="tiers">
                 <div class="tier">
-                    <h3>🟢 Good</h3>
+                    <h3>🟢 Good Configuration</h3>
                     <ul>
-                        <li>Google Sheets</li>
-                        <li>Zapier (basic)</li>
-                        <li>Apollo exports</li>
-                        <li>ChatGPT</li>
+                        <li>Google Sheets for data</li>
+                        <li>Zapier (basic plan)</li>
+                        <li>Apollo or Snov exports</li>
+                        <li>ChatGPT for message generation</li>
                     </ul>
                 </div>
                 <div class="tier">
-                    <h3>🔵 Better</h3>
+                    <h3>🔵 Better Configuration</h3>
                     <ul>
-                        <li>Make.com</li>
-                        <li>OpenAI Workflows</li>
-                        <li>CRM integration</li>
-                        <li>Advanced mapping</li>
+                        <li>Make with enrichment APIs</li>
+                        <li>OpenAI Workflows for combined scoring + messaging</li>
+                        <li>Direct CRM integration</li>
+                        <li>Advanced data mapping</li>
                     </ul>
                 </div>
                 <div class="tier">
-                    <h3>⚫ Best</h3>
+                    <h3>⚫ Best Configuration</h3>
                     <ul>
-                        <li>Retool interface</li>
-                        <li>OpenAI orchestration</li>
-                        <li>Direct connections</li>
-                        <li>Monitoring dashboard</li>
+                        <li>Custom retool interface</li>
+                        <li>OpenAI Workflows as central logic</li>
+                        <li>Direct connections to enrichment, CRM, outreach tools</li>
+                        <li>Real-time monitoring dashboard</li>
                     </ul>
                 </div>
             </div>
@@ -1007,47 +1084,49 @@
             <div class="quality">
                 <div>
                     <h2>Quality Control & Iteration</h2>
-                    <div class="quality-item">
-                        <div class="quality-icon">📋</div>
-                        <div>
-                            <h4>Weekly Review</h4>
-                            <p>Review 10+ agent messages, compare to best performers.</p>
+                    <div class="quality-items">
+                        <div class="quality-item">
+                            <div class="quality-icon">📋</div>
+                            <div>
+                                <h4>Weekly Review</h4>
+                                <p>Review at least 10 agent-generated messages per week. Compare to best-performing messages.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="quality-item">
-                        <div class="quality-icon">⚙️</div>
-                        <div>
-                            <h4>Data-Driven Adjustments</h4>
-                            <p>Refine prompts and scoring based on results.</p>
+                        <div class="quality-item">
+                            <div class="quality-icon">⚙️</div>
+                            <div>
+                                <h4>Data-Driven Adjustments</h4>
+                                <p>Adjust prompts, scoring rules, and ICP descriptions based on actual replies and meetings.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="quality-item">
-                        <div class="quality-icon">✅</div>
-                        <div>
-                            <h4>New Market Approval</h4>
-                            <p>Add approval step for new segments.</p>
+                        <div class="quality-item">
+                            <div class="quality-icon">✅</div>
+                            <div>
+                                <h4>Approval for New Markets</h4>
+                                <p>Introduce a simple approval step for new segments or markets until confident in quality.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="quality-item">
-                        <div class="quality-icon">💬</div>
-                        <div>
-                            <h4>Sales Feedback Loop</h4>
-                            <p>Improve based on real sales outcomes.</p>
+                        <div class="quality-item">
+                            <div class="quality-icon">💬</div>
+                            <div>
+                                <h4>Sales Feedback Loop</h4>
+                                <p>Use feedback from sales to improve the outreach angle and qualification rules.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="quality-image">
-                    <img src="page9-quality.jpg" alt="Quality">
+                    <img src="page9-quality.jpg" alt="Quality Control">
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="testimonial-section" style="padding: 80px 20px; background: var(--white);">
+    <section class="testimonial-section">
         <div class="container">
             <h2>What Growth Teams Are Saying</h2>
             <div class="testimonial-box">
-                <div class="testimonial-text">"This playbook saved us 20+ hours per week. Our response rates went up 40% after implementing the scoring logic."</div>
+                <div class="testimonial-text">"This playbook saved us 20+ hours per week on manual prospecting. Our response rates went up 40% after implementing the scoring logic and personalized outreach."</div>
                 <div class="testimonial-author">Alex Chen</div>
                 <div class="testimonial-title">VP Growth, SaaS Company</div>
             </div>
@@ -1057,18 +1136,18 @@
     <section class="final-cta">
         <div class="container">
             <div>
-                <h2>Download the Complete Playbook</h2>
+                <h2>Download the Complete Lead Gen Agent Playbook</h2>
                 <ul class="cta-list">
                     <li><strong>Complete workflow loop</strong> (6-step roadmap)</li>
                     <li><strong>ICP scoring model</strong> with real examples</li>
-                    <li><strong>Prompt templates</strong> for outreach</li>
-                    <li><strong>CRM integration</strong> steps</li>
-                    <li><strong>Quality control</strong> checklist</li>
+                    <li><strong>Prompt templates</strong> for outreach generation</li>
+                    <li><strong>CRM integration</strong> step-by-step</li>
+                    <li><strong>Quality control</strong> checklist & metrics</li>
                 </ul>
                 <button class="btn" onclick="openModal()">Get the Playbook</button>
             </div>
             <div>
-                <img src="page1-cover.jpg" alt="Playbook">
+                <img src="page1-cover.jpg" alt="Playbook Cover">
             </div>
         </div>
     </section>
@@ -1077,7 +1156,7 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">×</button>
             <h2>Download the Playbook</h2>
-            <p>Get the complete guide to building your autonomous lead agent in 14 days. Includes workflows, templates, and scoring logic.</p>
+            <p>Get the complete step-by-step guide to building your autonomous lead agent in 14 days. Includes workflows, templates, and scoring logic.</p>
             <form onsubmit="handleSubmit(event)">
                 <div class="form-group">
                     <input type="text" id="name" placeholder="Your Full Name" required>
@@ -1120,13 +1199,16 @@
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             
+            console.log('Lead captured:', { name, email });
+            
             const modal = document.getElementById('leadModal');
             const content = modal.querySelector('.modal-content');
             content.innerHTML = `
                 <div style="text-align: center; padding: 20px;">
-                    <h2 style="color: var(--primary); margin-bottom: 15px;">✅ Check Your Email!</h2>
-                    <p style="font-size: 14px; color: var(--gray); margin-bottom: 15px;">We sent the playbook to:</p>
-                    <p style="background: var(--light-gray); padding: 12px; border-radius: 3px; font-weight: 600; color: var(--dark); margin-bottom: 20px; font-size: 13px;">${email}</p>
+                    <h2 style="color: var(--primary); margin-bottom: 15px; font-size: 24px;">✅ Check Your Email!</h2>
+                    <p style="font-size: 14px; color: var(--gray); margin-bottom: 15px;">We sent the complete playbook to:</p>
+                    <p style="background: var(--light-gray); padding: 12px; border-radius: 0; font-weight: 600; color: var(--dark); margin-bottom: 20px; font-size: 13px;">${email}</p>
+                    <p style="font-size: 13px; color: var(--gray); margin-bottom: 20px;">It includes workflows, prompts, scoring logic, and the complete 6-step implementation roadmap.</p>
                     <button class="btn" onclick="closeModal()">Close</button>
                 </div>
             `;
